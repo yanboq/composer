@@ -24,8 +24,7 @@ import {
 import type { Editor } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { brandThemeKey, createBrandThemeStyles, type EditorThemeBase } from "@/lib/brand-theme";
 import {
   editorOperationsPatchValueSchema,
@@ -113,7 +112,7 @@ export function ReactEmailEditorClient({
       | null,
   ) => void;
 }) {
-  const [theme, setTheme] = useState<EditorThemeBase>("basic");
+  const theme: EditorThemeBase = "basic";
   const composingRef = useRef(false);
   const internalMutationRef = useRef(false);
   const appliedBrandThemeKey = useRef("");
@@ -277,28 +276,6 @@ export function ReactEmailEditorClient({
   return (
     <EditorContext.Provider value={{ editor }}>
       <div className="react-email-full-builder flex h-full min-h-0 flex-col bg-muted/20">
-        <div className="flex shrink-0 items-center justify-between gap-3 border-b bg-background px-3 py-2">
-          <div className="flex items-center gap-1">
-            <Button
-              type="button"
-              size="sm"
-              variant={theme === "basic" ? "default" : "outline"}
-              onClick={() => setTheme("basic")}
-            >
-              Basic Theme
-            </Button>
-            <Button
-              type="button"
-              size="sm"
-              variant={theme === "minimal" ? "default" : "outline"}
-              onClick={() => setTheme("minimal")}
-            >
-              Minimal Theme
-            </Button>
-          </div>
-          <span className="text-xs text-muted-foreground">Slash commands, menus, and inspector enabled</span>
-        </div>
-
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <div className="min-w-0 flex-1 overflow-y-auto p-4">
             <EditorContent className="react-email-editor mx-auto max-w-4xl rounded-md bg-white" editor={editor} />
