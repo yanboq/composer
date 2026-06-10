@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
+import { OptionalClerkProvider } from "@/components/clerk-wrapper";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "../globals.css";
@@ -13,15 +13,11 @@ export const metadata: Metadata = {
 };
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
-  const content = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
-    <ClerkProvider>{children}</ClerkProvider>
-  ) : (
-    children
-  );
-
   return (
     <html lang="en" className={cn("font-sans antialiased", geist.variable)} suppressHydrationWarning>
-      <body>{content}</body>
+      <body>
+        <OptionalClerkProvider>{children}</OptionalClerkProvider>
+      </body>
     </html>
   );
 }

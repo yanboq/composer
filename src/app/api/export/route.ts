@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       input.format === "plainText"
         ? project.renderedText ?? await renderProjectToText(project)
         : input.format === "reactEmailSource"
-          ? createProjectEmailSource(project)
+          ? await createProjectEmailSource(project)
           : project.renderedHtml ?? await renderProjectToHtml(project);
 
     return NextResponse.json({ format: input.format, value });

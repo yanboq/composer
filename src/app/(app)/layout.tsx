@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
+import { OptionalClerkProvider } from "@/components/clerk-wrapper";
 import { Geist } from "next/font/google";
 import { AssistantProvider } from "@/components/assistant-provider";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -47,17 +47,13 @@ function Shell({ children }: { children: React.ReactNode }) {
 }
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const content = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
-    <ClerkProvider>
-      <Shell>{children}</Shell>
-    </ClerkProvider>
-  ) : (
-    <Shell>{children}</Shell>
-  );
-
   return (
     <html lang="en" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
-      <body>{content}</body>
+      <body>
+        <OptionalClerkProvider>
+          <Shell>{children}</Shell>
+        </OptionalClerkProvider>
+      </body>
     </html>
   );
 }

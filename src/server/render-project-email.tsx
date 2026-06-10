@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, toPlainText } from "@react-email/render";
-import { getTemplateSourceUrl } from "@/lib/templates";
+import { getTemplateRawSourceUrl, getTemplateSourceUrl } from "@/lib/templates";
 import type { EmailProject, EmailSection } from "@/lib/schemas";
 
 function shellStyle(project: EmailProject): React.CSSProperties {
@@ -146,7 +146,18 @@ export async function renderProjectToText(project: EmailProject) {
   return toPlainText(html);
 }
 
-export function createProjectEmailSource(project: EmailProject) {
+export async function createProjectEmailSource(project: EmailProject) {
+  const rawSourceUrl = getTemplateRawSourceUrl(project.templateId);
+
+  if (rawSourceUrl) {
+    try {
+      const response = await fetch(rawSourceUrl, { next: { revalidate: 86400 } });
+      if (response.ok) return response.text();
+    } catch {
+      // Fall back to the local project source export when the upstream source is unavailable.
+    }
+  }
+
   const sourceUrl = getTemplateSourceUrl(project.templateId);
   const sourceComment = sourceUrl
     ? `// Based on the React Email Barebones source: ${sourceUrl}\n`

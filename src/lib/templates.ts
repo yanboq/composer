@@ -17,6 +17,7 @@ export type EmailTemplate = {
   subject: string;
   previewText: string;
   sourceUrl: string;
+  rawSourceUrl: string;
   demoUrl: string;
   preserveSourceLayout?: boolean;
   sections: EmailSection[];
@@ -498,6 +499,7 @@ export const emailTemplates: EmailTemplate[] = [
     subject: "Welcome aboard—Barebones",
     previewText: "Welcome aboard—Barebones",
     sourceUrl: "https://github.com/resend/react-email/blob/canary/apps/demo/emails/01-Barebone/welcome.tsx",
+    rawSourceUrl: "https://raw.githubusercontent.com/resend/react-email/canary/apps/demo/emails/01-Barebone/welcome.tsx",
     demoUrl: "https://demo.react.email/preview/01-Barebone/welcome",
     preserveSourceLayout: true,
     editorDocument: createWelcomeEditorDocument(),
@@ -538,6 +540,7 @@ export const emailTemplates: EmailTemplate[] = [
     subject: "Product update: what's new at Barebones",
     previewText: "Product update: what's new at Barebones",
     sourceUrl: "https://github.com/resend/react-email/blob/canary/apps/demo/emails/01-Barebone/product-update.tsx",
+    rawSourceUrl: "https://raw.githubusercontent.com/resend/react-email/canary/apps/demo/emails/01-Barebone/product-update.tsx",
     demoUrl: "https://demo.react.email/preview/01-Barebone/product-update",
     preserveSourceLayout: true,
     editorDocument: createProductUpdateEditorDocument(),
@@ -581,6 +584,7 @@ export const emailTemplates: EmailTemplate[] = [
     subject: "Release notes — Barebones",
     previewText: "Release notes — Barebones",
     sourceUrl: "https://github.com/resend/react-email/blob/canary/apps/demo/emails/01-Barebone/feature-announcement.tsx",
+    rawSourceUrl: "https://raw.githubusercontent.com/resend/react-email/canary/apps/demo/emails/01-Barebone/feature-announcement.tsx",
     demoUrl: "https://demo.react.email/preview/01-Barebone/feature-announcement",
     preserveSourceLayout: true,
     editorDocument: createFeatureAnnouncementEditorDocument(),
@@ -617,6 +621,10 @@ export const emailTemplates: EmailTemplate[] = [
 
 export function getTemplateSourceUrl(templateId: string) {
   return emailTemplates.find((item) => item.id === templateId)?.sourceUrl ?? null;
+}
+
+export function getTemplateRawSourceUrl(templateId: string) {
+  return emailTemplates.find((item) => item.id === templateId)?.rawSourceUrl ?? null;
 }
 
 export function createDefaultBrandProfile(): BrandProfile {
