@@ -187,20 +187,23 @@ export function BuilderWorkspace({
   async function applyPatches(patches: EmailPatch[], changeSummary: string) {
     setUndoStack((prev) => [...prev.slice(-19), project]);
     let next = applyEmailPatches(project, patches);
-    const hasEditorOperations = patches.some((patch) => patch.op === "applyEditorOperations");
 
-    if (hasEditorOperations && editorPatchBridge.current) {
-      const snapshot = await editorPatchBridge.current(
-        next.editorDocument,
-        next.brandProfile,
-        patches,
-      );
-      next = {
-        ...next,
-        editorDocument: snapshot.editorDocument,
-        renderedHtml: snapshot.html ?? next.renderedHtml,
-        renderedText: snapshot.text ?? next.renderedText,
-      };
+    if (editorPatchBridge.current) {
+      try {
+        const snapshot = await editorPatchBridge.current(
+          next.editorDocument,
+          next.brandProfile,
+          patches,
+        );
+        next = {
+          ...next,
+          editorDocument: snapshot.editorDocument,
+          renderedHtml: snapshot.html ?? next.renderedHtml,
+          renderedText: snapshot.text ?? next.renderedText,
+        };
+      } catch {
+        setEditorKey((key) => key + 1);
+      }
     } else {
       setEditorKey((key) => key + 1);
     }

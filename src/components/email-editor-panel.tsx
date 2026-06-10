@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useCallback, useState } from "react";
+import { EditorErrorBoundary } from "./editor-error-boundary";
 import type { EmailPatch, EmailProject } from "@/lib/schemas";
 
 const ReactEmailEditorClient = dynamic(
@@ -44,13 +46,21 @@ export function EmailEditorPanel({
       | null,
   ) => void;
 }) {
+  const [resetKey, setResetKey] = useState(0);
+
+  const handleReset = useCallback(() => {
+    setResetKey((k) => k + 1);
+  }, []);
+
   return (
-    <ReactEmailEditorClient
-      key={`${project.id}-${editorKey}`}
-      content={project.editorDocument}
-      brandProfile={project.brandProfile}
-      onSnapshot={onEditorSnapshot}
-      onRegisterPatchBridge={onRegisterPatchBridge}
-    />
+    <EditorErrorBoundary key={resetKey} onReset={handleReset}>
+      <ReactEmailEditorClient
+        key={`${project.id}-${editorKey}`}
+        content={project.editorDocument}
+        brandProfile={project.brandProfile}
+        onSnapshot={onEditorSnapshot}
+        onRegisterPatchBridge={onRegisterPatchBridge}
+      />
+    </EditorErrorBoundary>
   );
 }
