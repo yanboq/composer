@@ -48,9 +48,7 @@ function Nav() {
 
         <div className="flex items-center gap-3">
           <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/sign-in"
             className="hidden items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-zinc-900 sm:flex"
           >
             Sign in
@@ -101,7 +99,7 @@ function Hero() {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <a
-              href="https://github.com"
+              href="https://github.com/yanboq/composer"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-7 py-3.5 text-base font-semibold text-zinc-700 transition-all hover:border-zinc-400 hover:bg-zinc-50"
@@ -334,7 +332,7 @@ function OpenSource() {
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="https://github.com"
+              href="https://github.com/yanboq/composer"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-7 py-3.5 text-base font-semibold text-white transition-all hover:bg-zinc-800"
